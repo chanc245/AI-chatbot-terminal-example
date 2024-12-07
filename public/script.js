@@ -167,8 +167,6 @@ document.fonts.ready.then(() => {
       processInput: async function (input) {
         const prompt = evaluationPrompt(assignment5Paper, input);
 
-        console.log(prompt);
-
         const aiResponse = await fetchAIResponse(prompt);
 
         this.echo(`\n[Toolkit]
