@@ -177,7 +177,12 @@ document.fonts.ready.then(() => {
       },
     },
     {
-      greetings: "Welcome to Design Research 1: Methods - Research Toolkit",
+      greetings: `Welcome to Design Research 1: Methods - Research Toolkit
+
+This is a toolkit covering all content from PSDS 2100 Design Research 1: Methods.
+
+Feel Free to ask any questions you have!
+`,
       prompt: "> ",
       onInit: function () {
         this.push(async function (input) {
