@@ -1,7 +1,7 @@
 {
-  "name": "research-method-toolkit",
+  "name": "chat-ai-terminal-example",
   "version": "1.0.0",
-  "description": "A research toolkit covering all content from PSDS 2100 Design Research 1: Methods.",
+  "description": "This is a AI Chatbot that uses jquery.terminal. ",
   "main": "index.js",
   "type": "module",
   "scripts": {

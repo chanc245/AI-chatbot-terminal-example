@@ -1,12 +1,12 @@
-// ---------- GEMINI API ---------- //
-// npm run 1
+// ---------- GPT API ---------- //
+// npm run gpt
 
-import express from "express";
-import cors from "cors";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
-import "dotenv/config";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import express from 'express';
+import cors from 'cors';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import 'dotenv/config';
+import OpenAI from 'openai';
 
 const app = express();
 
@@ -17,53 +17,56 @@ const port = process.env.PORT || 3001;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-app.use(express.static(join(__dirname, "public")));
+app.use(express.static(join(__dirname, 'public')));
 
-app.get("/", (req, res) => {
-  res.sendFile(join(__dirname, "index.html"));
+app.get('/', (req, res) => {
+  res.sendFile(join(__dirname, 'index.html'));
 });
 
-app.post("/submit", async (req, res) => {
+app.post('/submit', async (req, res) => {
   let input = req.body.input;
 
   try {
-    const aiResponse = await getGenResultAsString(input);
+    const aiResponse = await getGptResultAsString(input);
     res.json({ ai: aiResponse });
   } catch (error) {
-    console.error("Gemini Error:", error);
-    res
-      .status(500)
-      .json({ error: "Failed to generate output. Please try again." });
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to generate output. Please try again.' });
   }
 });
 
-async function getGenResultAsString(input) {
-  console.log(`--User input: [${input}]`);
-  console.log("--Gemini Request Sent");
+async function getGptResultAsString(input) {
+  console.log("--Run GPT")
+  
+  const openai = new OpenAI({
+    apiKey: process.env.GPTAPIKEY,
+  });
 
-  const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+  try {
+    const completion = await openai.chat.completions.create({
+      messages: [
+        {
+          role: 'user',
+          content: input
+        }
+      ],
+      model: 'gpt-4-1106-preview',
+      temperature: 0.1,
+    });
 
-  // const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest"});
-  //gemini-1.5-pro-latest -> better than gemini-pro but too easy to exhaust
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
-  const prompt = input;
-
-  const result = await model.generateContent(prompt);
-  const response = await result.response;
-  const text = response.text();
-
-  console.log(`==Gemini Output: [${text}]`);
-
-  return text;
+    return completion.choices[0]?.message?.content || 'No response received from GPT-3.';
+  } catch (error) {
+    console.error('GPT-3 Error:', error);
+    throw error; 
+  }
 }
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// ---------- GEMINI API ---------- //
-// ---------- GEMINI API ---------- //
-// ---------- GEMINI API ---------- //
-// ---------- GEMINI API ---------- //
-// ---------- GEMINI API ---------- //
+// ---------- GPT API ---------- //
+// ---------- GPT API ---------- //
+// ---------- GPT API ---------- //
+// ---------- GPT API ---------- //
+// ---------- GPT API ---------- //

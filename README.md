@@ -1,12 +1,10 @@
-# Design Research 1: Methods - Research Toolkit
+# AI Chatbot example in jquery.terminal 
 
-This is a research toolkit covering all content from PSDS 2100 Design Research 1: Methods.
+This is a AI Chatbot that uses jquery.terminal. 
 
-[**Try this toolkit!**](https://design-research-method-toolkit.onrender.com/)
+## Dependencies 
 
-## References
-
-- [Gemini API](https://ai.google.dev/)
+- [OpenAI API](https://platform.openai.com/docs/concepts)
 - [Node.js](https://nodejs.org/)
 - [Express.js](https://expressjs.com/)
 - [jquery.terminal](https://github.com/jcubic/jquery.terminal)
